@@ -3,11 +3,12 @@ import './App.css'
 import { Button, Card, Form } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function Todo({ todo, index, markTodo, removeTodo }) {
+function Todo({ todo, index, editTodo, markTodo, removeTodo }) {
   return (
     <div className="todo">
       <span style={{ textDecoration: todo.isDone ? 'line-through' : '' }}> {todo.text} </span>
       <div>
+        <Button variant="warning" onClick={() => editTodo(index)}>✐</Button>{' '}
         <Button variant="success" onClick={() => markTodo(index)}>✓</Button>{' '}
         <Button variant="danger" onClick={() => removeTodo(index)}>✕</Button>
       </div>
@@ -66,6 +67,14 @@ function App() {
     setTodos(newTodos);
   }
 
+  const editTodo = index => {
+    console.log(todos[index].text);
+    const newTodos = [...todos];
+    const newTodo = prompt('New Todo ?');
+    newTodos[index].text = newTodo;
+    setTodos(newTodos);
+  }
+
   return (
     <div className="app">
       <div className="container justify-content-center col-lg-8">
@@ -74,9 +83,9 @@ function App() {
         <div>
           {
             todos.map((todo, index) => (
-              <Card className="mt-2">
+              <Card className="mt-2" key={index}>
                 <Card.Body>
-                  <Todo key={index} index={index} todo={todo} markTodo={markTodo} removeTodo={removeTodo} />
+                  <Todo key={index} index={index} todo={todo} editTodo={editTodo} markTodo={markTodo} removeTodo={removeTodo} />
                 </Card.Body>
               </Card>
             ))
