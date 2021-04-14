@@ -71,6 +71,9 @@ function App() {
     console.log(todos[index].text);
     const newTodos = [...todos];
     const newTodo = prompt('New Todo ?');
+    if(newTodo == null) {
+      return;
+    }
     newTodos[index].text = newTodo;
     setTodos(newTodos);
   }
